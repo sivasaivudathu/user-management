@@ -3,17 +3,18 @@
  */
 package com.project.usermanagement.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.usermanagement.api.models.AddUserRequest;
+import com.project.usermanagement.api.models.JwtRequest;
+import com.project.usermanagement.api.models.JwtResponse;
 import com.project.usermanagement.models.BaseResponse;
-import com.project.usermanagement.models.User;
 import com.project.usermanagement.service.UserService;
 
 /**
@@ -26,17 +27,16 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
-	@PostMapping("/users")
-	public BaseResponse addUser(@RequestBody User user) {
-		return userService.addUser(user);
+	@PostMapping("/register")
+	public BaseResponse addUser(@RequestBody AddUserRequest request) {
+		return userService.addUser(request);
 	}
 
-	@GetMapping(value = "/username")
+	
+	@PostMapping("/authenticate")
 	@ResponseBody
-	public String currentUserName(Authentication authentication) {
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		System.out.println("User has authorities: " + userDetails.getAuthorities());
-		return authentication.getName();
+	public JwtResponse createAuthenticationToken(@RequestBody @Valid JwtRequest request) throws Exception {
+		return userService.createAuthenticationToken(request);
 	}
 
 }

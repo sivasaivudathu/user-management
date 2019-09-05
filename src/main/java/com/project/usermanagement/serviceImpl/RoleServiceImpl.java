@@ -26,7 +26,7 @@ public class RoleServiceImpl implements RoleService {
 	
 	@Override
 	public BaseResponse addRole(AddRoleRequest request) {
-		String roleName = request.getRoleName();
+		String roleName = request.getRoleName().toUpperCase();
 		if(isRoleExists(roleName)) {
 			return new BaseResponse("FAILED", "Role alredy exixts with name :"+ roleName);
 		}

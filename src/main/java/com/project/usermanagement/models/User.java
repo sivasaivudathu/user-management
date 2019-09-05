@@ -40,6 +40,17 @@ public class User {
 
 	}
 
+	
+	public User(String name, String password, boolean isActive, String emailId, String phoneNumber) {
+		super();
+		this.name = name;
+		this.password = password;
+		this.isActive = isActive;
+		this.emailId = emailId;
+		this.phoneNumber = phoneNumber;
+	}
+
+
 	/**
 	 * @param user
 	 */
@@ -124,7 +135,6 @@ public class User {
 			}
 			roles.add(role);
 		}
-
 	}
 
 	public void addGroup(Group group) {
